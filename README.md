@@ -6,6 +6,28 @@ Literature suggestions:
 - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8533681/
 - https://cran.r-project.org/web/packages/BI/index.html
 
+## Theorectical Background
+- we are interested in two different blinding indices (BI): James' BI and Bang's BI
+
+### James' BI
+- James' BI is not treatment arm specific (no closer look within the subgroups)
+- James' BI ranges from 0 to 1
+- 0 representing total lack of blinding (all participants guess right)
+- 1 representing complete blinding (all participants guess wrong) 
+    - could be also problematic: as this may indicate "unblinding" in the opposite direction
+- 0.5 representing completely random blinding (half the participants guess correct, half guess right)
+- lack of blinding can be considered if the upper bound of the (two-sided) confidence interval is below 0.5 (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8533681/)
+
+### Bang's BI
+- Bang's BI is treatment arm specific (looks at the blinding within each treatment)
+- Bang's BI ranges from -1 to 1
+- 0 representing completly random blinding (half the participants guess correct, half guess right)
+- 1 representing complete unblinding (all participants guess right)
+- -1 representing all participants guess their treatment wrong 
+- if -0.2 <= Bang's BI <= 0.2: blinding is considered to be successful
+- lack of blinding can be considered if relevant limit of the one-sided confidence interval does not cover 0 (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8533681/)
+
+
 ## First step: Create the data set 
 - in order to gain data about the blinding, you can use the TES questionnaire from Table 11 ("Questionnaire of sensations related to transcranial electrical stimulation (TES)" https://pubmed.ncbi.nlm.nih.gov/28709880/)
 - you ask the participants to guess in which group they have been
@@ -44,3 +66,4 @@ Literature suggestions:
 - pay attention that the matrix order looks like your blinding table
 
 ## Third step: Interpretation
+- 
