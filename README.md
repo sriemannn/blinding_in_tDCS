@@ -17,5 +17,30 @@ Literature suggestions:
 - required packages: BI 
 - read the data and create a table for your manuscript
 
+#### Preparation 
+                  df1$group <- as.factor(df1$group)
+                  df1$guess <- as.factor(df1$guess)
+
+                  df1$guess <- recode(df1$guess, "1" ="1_active", "2"="2_placebo", "3"="3_dk")
+
+                  df1_anodal <- df1[ which(df1$group=='B'), ]
+                  vector_anodal <- dplyr::count(df1_anodal, guess)
+                  names(vector_anodal)[names(vector_anodal) == "n"] <- "Treatment"
+
+                  df1_sham <- df1[ which(df1$group=='A'), ]
+                  vector_sham <- dplyr::count(df1_sham, guess)
+                  names(vector_sham)[names(vector_sham) == "n"] <- "Placebo"
+
+                  blinding_table <- merge(vector_anodal,vector_sham, all=TRUE)
+                  blinding_table
+####
+#### applying the blinding index  
+                  x <- matrix(c(9, 8, 12, 11, 5, 7), nrow = 3, ncol = 2, byrow = TRUE)
+                  x
+                  BI(x)
+                  BI(x, alternative.B = "greater")
+                  BI(x, alternative.B = "less")
+####
+- pay attention that the matrix order looks like your blinding table
 
 ## Third step: Interpretation
