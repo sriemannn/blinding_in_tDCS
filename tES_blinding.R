@@ -27,9 +27,6 @@ df1 <- read.xlsx("example_blinding.xlsx",
 )
 
 response_pivot <- df1 %>%
-    mutate(group = as.factor(group),
-           guess = as.factor(guess)
-           ) %>%
     group_by(group) %>%
     count(guess) %>%
     pivot_wider(
@@ -40,7 +37,6 @@ response_pivot <- df1 %>%
         Placebo = A,
         Treatment = B
     )
-
 
 x <- data.matrix(response_pivot)[, 2:3]
 
