@@ -14,7 +14,7 @@ Literature suggestions:
 - James' BI ranges from 0 to 1
 - 0 representing total lack of blinding (all participants guess right)
 - 1 representing complete blinding (all participants guess wrong) 
-    - could be also problematic: as this may indicate "unblinding" in the opposite direction
+    - could be also problematic: may indicate "unblinding" in the opposite direction
 - 0.5 representing completely random blinding (half the participants guess correct, half guess right)
 - lack of blinding can be considered if the upper bound of the (two-sided) confidence interval is below 0.5 (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8533681/)
 
@@ -24,6 +24,7 @@ Literature suggestions:
 - 0 representing completly random blinding (half the participants guess correct, half guess right)
 - 1 representing complete unblinding (all participants guess right)
 - -1 representing all participants guess their treatment wrong 
+    - could be also problematic: may indicate "unblinding" in the opposite direction
 - if -0.2 <= Bang's BI <= 0.2: blinding is considered to be successful
 - lack of blinding can be considered if relevant limit of the one-sided confidence interval does not cover 0 (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8533681/)
 
@@ -66,4 +67,11 @@ Literature suggestions:
 - pay attention that the matrix order looks like your blinding table
 
 ## Third step: Interpretation
-- 
+#### James' BI
+                             Estimate Std. Error 95% LCL (2-Sided) 95% UCL (2-Sided)
+                    Overall 0.6125215 0.06646557         0.4822513         0.7427916
+####
+- James’ BI estimate was 0.6 (95% CI: 0.5-0.7) implying that the participants were effectively blinded
+    -  0.5 representing completely random blinding (half the participants guess correct, half guess right)
+    - lack of blinding can be considered if the upper bound of the (two-sided) confidence interval is below 0.5 
+        -  0.7 > 0.5
