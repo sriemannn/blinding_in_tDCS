@@ -75,3 +75,20 @@ Literature suggestions:
     -  0.5 representing completely random blinding (half the participants guess correct, half guess right)
     - lack of blinding can be considered if the upper bound of the (two-sided) confidence interval is below 0.5 
         -  0.7 > 0.5
+#### Bang's BI
+                        BI(x)
+                                Estimate Std. Error 95% LCL (2-Sided) 95% UCL (2-Sided)
+                    Treatment -0.1153846  0.1747942        -0.4579750         0.2272058
+                    Placebo    0.1153846  0.1661158        -0.2101963         0.4409655
+                    
+                    BI(x, alternative.B="greater")
+                                 Estimate Std. Error 95% LCL (1-Sided) 95% UCL (1-Sided)
+                    Treatment -0.1153846  0.1747942        -0.4028956                 1
+                    Placebo    0.1153846  0.1661158        -0.1578515                 1                    
+                    
+####
+- the Bang’s BI for the anodal group was -0.1 (95% CI: -1, 0.2) and 0.1 (95% CI: -1, 0.4) for the sham group
+- this result indicates that blinding was effective within the two stimulation conditions 
+    -  0 representing completly random blinding (half the participants guess correct, half guess right)
+    - if -0.2 <= Bang's BI <= 0.2: blinding is considered to be successful
+    - lack of blinding can be considered if relevant limit of the one-sided confidence interval does not cover 0
