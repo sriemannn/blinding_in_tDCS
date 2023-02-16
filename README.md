@@ -88,8 +88,8 @@ BI(x, alternative.B = "less")
 
 ```r
 
-                             Estimate Std. Error 95% LCL (2-Sided) 95% UCL (2-Sided)
-                    Overall 0.6125215 0.06646557         0.4822513         0.7427916
+          Estimate Std. Error 95% LCL (2-Sided) 95% UCL (2-Sided)
+ Overall 0.6125215 0.06646557         0.4822513         0.7427916
 ```
 
 - James’ BI estimate was 0.6 (95% CI: 0.5-0.7) implying that the participants were effectively blinded
