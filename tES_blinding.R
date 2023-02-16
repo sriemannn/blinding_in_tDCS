@@ -1,5 +1,10 @@
-#Blinding Assessment Indices for tES Studies
+#Blinding Indices for tES Studies
 #Author: Anna E. Fromm 
+# the script used several existing packages and I do not want to take credit for developing another tool; 
+#I just want to show how I use different packages within my research
+
+#https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8533681/
+#https://cran.r-project.org/web/packages/BI/index.html
 
 
 rm(list=ls())
@@ -11,7 +16,7 @@ library(BI)
 #https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8533681/
 #https://cran.r-project.org/web/packages/BI/index.html
 
-setwd("E:/Arbeit/03 Weiterbildung/R/GitHub") 
+setwd("XXXXX") 
 
 df1 <- read.xlsx("example_blinding.xlsx"
                  ,sheet = 1, startRow = 1, colNames = TRUE, rowNames = FALSE, detectDates = FALSE,   skipEmptyRows = TRUE,   skipEmptyCols = TRUE,   rows = NULL,   cols = NULL,   sep.names = ".",   na.strings = "NA",   fillMergedCells = FALSE)
