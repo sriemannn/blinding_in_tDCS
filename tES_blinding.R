@@ -38,6 +38,8 @@ response_pivot <- df1 %>%
         Treatment = B
     )
 
+response_pivot[is.na(response_pivot)] <- 0
+
 x <- data.matrix(response_pivot)[, 2:3]
 
 BI(x)
