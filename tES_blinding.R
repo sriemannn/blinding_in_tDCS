@@ -31,14 +31,13 @@ response_pivot <- df1 %>%
     count(guess) %>%
     pivot_wider(
         names_from = group,
-        values_from = n
+        values_from = n,
+        values_fill = 0
     ) %>%
     rename(
         Placebo = A,
         Treatment = B
     )
-
-response_pivot[is.na(response_pivot)] <- 0
 
 x <- data.matrix(response_pivot)[, 2:3]
 
