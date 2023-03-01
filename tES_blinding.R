@@ -31,7 +31,8 @@ response_pivot <- df1 %>%
     count(guess) %>%
     pivot_wider(
         names_from = group,
-        values_from = n
+        values_from = n,
+        values_fill = 0
     ) %>%
     rename(
         Placebo = A,
