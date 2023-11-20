@@ -99,18 +99,18 @@ estimators <- c()
 # repeated simulations of responses to the placebo question
 # for different values of the mean of the slope for the "yes" response
 for (mu_yes_m in seq(-3, 3, 0.5)) {
-  for (permutations in 1:1000) {
+  for (permutations in 1:100) {
     print(paste(mu_yes_m, permutations))
     df <- sim_data(
       N = 100,
-      intercept_no_m = qnorm(1 / 2),
-      intercept_no_sd = 0.1,
+      intercept_no_m = qnorm(1 / 3),
+      intercept_no_sd = 0.4,
       intercept_yes_m = qnorm(2 / 3),
-      intercept_yes_sd = 0.1,
+      intercept_yes_sd = 0.4,
       mu_no_m = 0.0,
-      mu_no_sd = 0.05,
+      mu_no_sd = 0.2,
       mu_yes_m = mu_yes_m,
-      mu_yes_sd = 0.05
+      mu_yes_sd = 0.2
     )
     response_matrix <- reshape_data(df)
     estimators <- rbind(estimators, c(
@@ -137,9 +137,9 @@ ggplot(df_bi, aes(x = yes_mu_m, y = bi, color = group)) +
   geom_hline(yintercept = -0.2, linetype = "dashed") +
   theme_bw() +
   scale_color_viridis_d() +
-  scale_x_continuous(breaks = seq(-3, 3, 0.5), labels = round(pnorm(
-    qnorm(2 / 3) + seq(-3, 3, 0.5)
-  ), 4) * 100) +
+  scale_x_continuous(breaks = seq(-3, 3, 0.5), labels = round(
+    1 - pnorm(qnorm(2 / 3) + seq(-3, 3, 0.5)), 4
+  ) * 100) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  xlab("Probability of 'yes' response in the group") +
+  xlab("Probability of 'yes' response in the treatment group") +
   ylab("Blinding index")
