@@ -106,21 +106,24 @@ interval <- seq(-2, 2, 0.25)
 # repeated simulations of responses to the placebo question
 # for different values of the mean of the slope for the "yes" response
 
-estimators <- pbmclapply(rep(interval, 100), function(x) {
-  df <- sim_data(
-    N = 100,
-    intercept_no_m = qnorm(1 / 3),
-    intercept_no_sd = 0.4,
-    intercept_yes_m = qnorm(2 / 3),
-    intercept_yes_sd = 0.4,
-    mu_no_m = 0.0,
-    mu_no_sd = 0.2,
-    mu_yes_m = mu_yes_m,
-    mu_yes_sd = 0.2
-  )
-  response_matrix <- reshape_data(df)
-  c(mu_yes_m, get_estimators(response_matrix))
-})
+estimators <- pbmclapply(
+  rep(interval, 100),
+  function(mu_yes_m) {
+    df <- sim_data(
+      N = 100,
+      intercept_no_m = qnorm(1 / 3),
+      intercept_no_sd = 0.4,
+      intercept_yes_m = qnorm(2 / 3),
+      intercept_yes_sd = 0.4,
+      mu_no_m = 0.0,
+      mu_no_sd = 0.2,
+      mu_yes_m = mu_yes_m,
+      mu_yes_sd = 0.2
+    )
+    response_matrix <- reshape_data(df)
+    c(mu_yes_m, get_estimators(response_matrix))
+  }
+)
 
 estimators <- do.call(rbind, estimators)
 
