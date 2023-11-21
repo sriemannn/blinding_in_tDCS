@@ -1,5 +1,6 @@
 library(BI)
 library(tidyverse)
+library(pbmcapply)
 
 # Simulate data
 
@@ -34,7 +35,12 @@ sim_data <- function(
   # mu_yes_sd: standard deviation of the slope for the "yes" response
 
   n_groups <- 2
-  group_size <- N / n_groups
+  if (N %% n_groups != 0) {
+    cat("Adjusting N to be divisible by n_groups (2).\n")
+    N <- N + (n_groups - N %% n_groups)
+    cat(paste0("N is now ", N, ".\n"))
+  }
+  group_size <- N %/% n_groups
   grouping <- rep(1:n_groups, each = group_size) - 1
 
   blinding <- rnorm(N, 0, 1)
@@ -94,13 +100,16 @@ get_estimators <- function(response_matrix) {
   c(treatment, placebo, james)
 }
 
-estimators <- c()
+
+interval <- seq(-2, 2, 0.25)
 
 # repeated simulations of responses to the placebo question
 # for different values of the mean of the slope for the "yes" response
-for (mu_yes_m in seq(-3, 3, 0.5)) {
-  for (permutations in 1:100) {
-    print(paste(mu_yes_m, permutations))
+
+estimators <- c()
+
+for (mu_yes_m in interval) {
+  estimators_i <- pbmclapply(1:100, function(x) {
     df <- sim_data(
       N = 100,
       intercept_no_m = qnorm(1 / 3),
@@ -113,13 +122,14 @@ for (mu_yes_m in seq(-3, 3, 0.5)) {
       mu_yes_sd = 0.2
     )
     response_matrix <- reshape_data(df)
-    estimators <- rbind(estimators, c(
-      mu_yes_m, get_estimators(response_matrix)
-    ))
-  }
+    c(mu_yes_m, get_estimators(response_matrix))
+  })
+  estimators <- rbind(estimators, estimators_i)
 }
 
-write.table(estimators, "estimators_2.tsv", sep = "\t", row.names = FALSE)
+estimators <- do.call(rbind, estimators)
+
+write.table(estimators, "estimators.tsv", sep = "\t", row.names = FALSE)
 
 df_bi <- data.frame(
   yes_mu_m = estimators[, 1],
@@ -135,10 +145,10 @@ ggplot(df_bi, aes(x = yes_mu_m, y = bi, color = group)) +
   geom_smooth() +
   geom_hline(yintercept = 0.2, linetype = "dashed") +
   geom_hline(yintercept = -0.2, linetype = "dashed") +
-  theme_bw() +
+  theme_classic() +
   scale_color_viridis_d() +
-  scale_x_continuous(breaks = seq(-3, 3, 0.5), labels = round(
-    1 - pnorm(qnorm(2 / 3) + seq(-3, 3, 0.5)), 4
+  scale_x_continuous(breaks = interval, labels = round(
+    1 - pnorm(qnorm(2 / 3) + interval), 4
   ) * 100) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   xlab("Probability of 'yes' response in the treatment group") +
